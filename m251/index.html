@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <h2> Question 1: [10 marks]
+Write the code of class WashingMachine. The comparison in compareTo() method is
+based on productionYear.
+Question 2: [13 marks]
+<br>
+<br><br><br><br><br><br><br><br>
+a) Create a text file includes the following data of 6 WashingMachine objects, where the
+values represent brandName, productionYear and capacity, respectively:<br>
+Toshiba 2022 6<br>
+Samsung 2021 10<br>
+Bosch 2023 9<br>
+Beko 2022 8<br>
+Bosch 2020 9<br>
+Beko 2022 8<br>
+<br><br><br><br><br><br><br>
+b) Write the code of class Laundry if you know that:<br><br>
+• The constructor of the class creates a new empty ArrayList and assign it to the
+machines instance variable.<br><br>
+• The method b addDataFromFile() takes as an argument the name of a text file, and
+read data from the file and store it in the machines list. It is not allowed to add the
+same WashingMachine twice and in this case an error message should be displayed.<br><br>
+• The method brandFrequency() takes as an argument brandName, and returns
+number of WashingMachine objects in the machines list of the same brandName.<br><br>
+• The method printSorted() sorts the machines list according to productionYear, then
+print its elements on the screen (one object per line).<br><br><br><br><br><br>
+Question 3: [6 marks]
+Write a Test class to test classes declared in Q1 and Q2 as follows:<br>
+1. Declare and create a Laundry object referenced by a variable called dry.<br><br>
+2. Fill the machines list of the object dry by data from the text file created in Q2 by
+calling a suitable method.<br><br>
+3. Print number of WashingMachine objects of brandName: Bosch in the object dry
+by calling a suitable method.<br><br>
+4. Sort then print the WashingMachine objects in the object dry by calling a suitable
+method.<br>
+<br><br><br><br><br><br><br><br><br><br>
+Question 4: [1 mark]
+Copy and paste the exact output of your code</h2><br><br><br><br><br><br><br><br>
+
+
+
+Question 1:
+public class WashingMachine extends Laundry implements<br>
+Comparable<WashingMachine>{<br>
+ private String brandName;<br>
+ private int productionYear;<br>
+ private int capacity;<br>
+ Laundry l;<br>
+ public WashingMachine() {<br>
+ }<br>
+ public WashingMachine(String brandName, int productionYear, int capacity) {<br>
+ this.brandName = brandName;<br>
+ this.productionYear = productionYear;<br>
+ this.capacity = capacity;<br>
+ }<br>
+ public String getBrandName() {<br>
+ return brandName;<br>
+ }<br>
+ public int getProductionYear() {<br>
+ return productionYear;<br>
+ }<br>
+ public int getCapacity() {<br>
+ return capacity;<br>
+ }<br>
+ public void setBrandName(String brandName) {<br>
+ this.brandName = brandName;<br>
+ }<br>
+ public void setProductionYear(int productionYear) {<br>
+ this.productionYear = productionYear;<br>
+ }<br>
+ public void setCapacity(int capacity) {<br>
+ this.capacity = capacity;<br>
+ }<br>
+ @Override<br>
+ public String toString() {<br>
+ return "WashingMachine{" +<br>
+ "brandName='" + brandName + '\'' +<br>
+ ", productionYear=" + productionYear +<br>
+ ", capacity=" + capacity +<br>
+ '}';<br>
+ }<br>
+ @Override<br>
+ public boolean equals(Object obj) {<br>
+ if (!(obj instanceof WashingMachine)){<br>
+ return false;<br>
+ }<br>
+ WashingMachine wm = ((WashingMachine) obj);<br>
+ if (this.brandName.equals(wm.brandName) && this.productionYear ==<br>
+wm.productionYear && this.capacity == wm.capacity ){<br>
+ return true;<br>
+ }<br>
+ else{<br>
+ return false;<br>
+ }<br>
+ }<br>
+ @Override<br>
+ public int compareTo(WashingMachine o) {<br>
+ return this.brandName.compareTo(o.brandName);<br>
+ }<br>
+}//class end <hr> <hr>
+<br><br><br><br><br><br>
+Class Laundry:<br>
+import java.util.*;<br>
+import java.io.*;<br>
+public class Laundry {<br>
+ private ArrayList<WashingMachine> machines;<br>
+ public Laundry() {<br>
+ this.machines = new ArrayList<WashingMachine>();<br>
+ }<br>
+ public void addDataFromFile(File file){<br>
+ String brandName;<br>
+ int productionYear;<br>
+ int capacity;<br>
+ try{<br>
+ Scanner read = new Scanner(file);<br>
+ while (read.hasNextLine()){<br>
+ String lines = read.nextLine();<br>
+ String[] slicing = lines.split(" ");<br>
+ brandName = slicing[0];<br>
+ productionYear = Integer.parseInt(slicing[1]);<br>
+ capacity = Integer.parseInt(slicing[2]);<br>
+ WashingMachine obj = new<br>
+WashingMachine(brandName,productionYear,capacity);<br>
+ if (!(this.machines.contains(obj))){<br>
+ this.machines.add(obj);<br>
+ }else{<br>
+ System.out.println("Not added, Machine exists already: "+obj);<br>
+ }<br>
+ }<br>
+ }catch(Exception e){<br>
+ System.out.println(e);<br>
+ }<br>
+ }<br>
+public int brandFrequency(String brandName){<br>
+ int counter = 0 ;<br>
+ for (WashingMachine m: machines) {<br>
+ if (m.getBrandName().equals(brandName)){<br>
+ counter++;<br>
+ }<br>
+ }<br>
+ return counter;<br>
+}<br>
+public void printSorted(){<br>
+ Collections.sort(machines);<br>
+ for (WashingMachine m : machines) {<br>
+ System.out.println(m);<br>
+ }
+}//clas end <hr><hr><br><br><br>
+Question 3:<br>
+import java.util.*;<br>
+import java.io.*;<br>
+public class Test {<br>
+ public static void main(String[] args) {<br>
+ File f = new File("C:/Users/i-seven/Desktop/washing-machines.txt");<br>
+ try{<br>
+ PrintWriter pr = new PrintWriter(f);<br>
+ pr.println("Toshiba 2022 6");<br>
+ pr.println("Samsung 2021 10");<br>
+ pr.println("Bosch 2023 9");<br>
+ pr.println("Beko 2022 8");<br>
+ pr.println("Bosch 2020 9");<br>
+ pr.println("Beko 2022 8");<br>
+ pr.close();<br>
+ }catch (Throwable e){<br>
+ System.out.println(e);<br>
+ }<br>
+ finally {<br>
+ }<br>
+ Laundry dry = new Laundry();<br>
+ dry.addDataFromFile(new<br>
+File("C:/Users/i-seven/Desktop/washing-machines.txt"));<br>
+ System.out.println("\n");<br>
+ System.out.println("Number of Brand Name existing:<br>
+"+dry.brandFrequency("Bosch"));<br>
+ System.out.println("\n");<br>
+ dry.printSorted();<br>
+ }//class end<br>
+}
+</body>
+</html>
